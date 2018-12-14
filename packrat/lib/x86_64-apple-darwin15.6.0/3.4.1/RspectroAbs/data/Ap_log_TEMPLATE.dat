@@ -1,0 +1,17 @@
+# Fichier avec:
+#   ID         Unique ID of the sample
+#   Repl       A letter corresponding to the replicat (A,B,C,etc)
+#   Station    Station name
+#   Depth      Depth of the sample
+#   Vol        Filtered volume in mL
+#   Farea      clearance area of particles on filter in m^2
+#   blank.file ID if the reference blank filter
+#   Ap.good	   Boolean quality control indicator  (1=good ; 0 = not good)
+#   NAp.good   Boolean quality control indicator (1=good ; 0 = not good)
+#   process    Boolean
+#   NAP.method String indicating the method is retained to derive
+#               phytoplankton absorption
+#               ("Measured", "Fitted", "BS90_1"", "BS90_2")
+#
+########################################################################
+ID	Repl	Station	Depth	Vol	Farea	blank.file	Ap.good	NAp.good	process  NAP.method

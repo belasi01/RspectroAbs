@@ -1,0 +1,8 @@
+###############################################
+#   ID      est la base du nom de fichier et l'indentifiant qui permet de joindre aux autres paramètres
+#   Station est le nom de la station
+#   Depth   est la profondeur de l'échantillon en m
+#   pathlenght est la longueur du chemin optique en m
+#   Ag.good  =0 pour ne pas traité le spectre, =1 pour le traitement
+#######################################################
+ID	Station	Depth	pathlength	Ag.good
