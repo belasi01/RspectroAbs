@@ -12,8 +12,8 @@
 #'  and save the data in a RData file.
 #'
 #' @seealso \code{\link{compute.Aph}}
-#' @author Simon Bélanger
-#'
+#' @author Simon Belanger
+#'@export
 run.compute.Aph.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./") {
 
 

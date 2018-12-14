@@ -42,7 +42,7 @@
 #'
 #' @seealso \code{\link{process.Ag}}
 #'
-#' @author Simon Bélanger
+#' @author Simon Belanger
 #'
 #' @export
 

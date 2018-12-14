@@ -54,5 +54,5 @@ The processing steps includes:
 The \pkg{cdom} package for more details on the CDOM spectral analysis.
 }
 \author{
-Simon Bélanger
+Simon Belanger
 }

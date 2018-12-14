@@ -7,7 +7,7 @@
 check.Ag.blank(filen, PNG = TRUE)
 }
 \arguments{
-\item{filen}{is the name of the CSV file.}
+\item{filen}{read.LAMBDA850}
 
 \item{PNG}{is a logical parameter indicating whether or not
 the plots are save in a PNG file. Default is TRUE.}
@@ -27,5 +27,5 @@ nano = check.Ag.blank("data/nano_2.Sample.Raw.csv1", PNG=FALSE)
 setwd(localpath)
 }
 \author{
-Simon Bélanger
+Simon Belanger
 }

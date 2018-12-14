@@ -1,5 +1,0 @@
-cdom_fit_exponential    Fit an exponential model to CDOM data.
-cdom_slope_ratio        Calculate the slope ratio (SR) from an
-                        absorption spectra.
-cdom_spectral_curve     Calculate the spectral curve of CDOM spectra.
-spectra                 CDOM absorption data.

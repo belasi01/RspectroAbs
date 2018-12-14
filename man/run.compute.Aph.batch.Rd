@@ -4,7 +4,8 @@
 \alias{run.compute.Aph.batch}
 \title{Compute phytoplankton absorption spectrum in batch mode}
 \usage{
-run.compute.Aph.batch(log.file = "Ap_log_TEMPLATE.dat", data.path = "./")
+run.compute.Aph.batch(log.file = "Ap_log_TEMPLATE.dat",
+  data.path = "./")
 }
 \arguments{
 \item{log.file}{is the name of the ASCII file containing the list of
@@ -25,5 +26,5 @@ for each samples found in the Log file provided as input.
 \code{\link{compute.Aph}}
 }
 \author{
-Simon Bélanger
+Simon Belanger
 }

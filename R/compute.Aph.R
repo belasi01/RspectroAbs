@@ -20,8 +20,8 @@
 #' Aph.BS90, Anap.BS90 and Aph.BS90.v2, Anap.BS90.v2.}
 #' }
 
-#' @author Simon Bélanger
-
+#' @author Simon Belanger
+#'@export
 
 compute.Aph <- function(waves, Ap, Anap){
 

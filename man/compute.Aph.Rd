@@ -34,5 +34,5 @@ Compute phytoplankton absorption spectrum (Aph) from total particulate absorptio
 and, if available, the non-algal particles absorption (Anap) spectra
 }
 \author{
-Simon Bélanger
+Simon Belanger
 }

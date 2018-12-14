@@ -1,7 +1,7 @@
 #' Plot a blank spectrum for diagnostic
 #'
 #'   Check a blank spectrum made during CDOM measurement with Lambda-850 spectrophotometer for diagnostic
-#' @inheritParams read.LAMBDA850
+#' @param filen read.LAMBDA850
 #' @param PNG  is a logical parameter indicating whether or not
 #' the plots are save in a PNG file. Default is TRUE.
 #'
@@ -14,11 +14,8 @@
 #' setwd(path.package("RspectroAbs"))
 #' nano = check.Ag.blank("data/nano_2.Sample.Raw.csv1", PNG=FALSE)
 #' setwd(localpath)
-#' @author Simon Bélanger
-#'
-#'
+#' @author Simon Belanger
 #' @export
-
 check.Ag.blank <- function(filen, PNG=TRUE){
 
   nano = read.LAMBDA850(filen)

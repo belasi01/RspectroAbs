@@ -38,7 +38,7 @@
 #'
 #'@seealso The \pkg{cdom} package for more details on the CDOM spectral analysis.
 
-#'@author Simon Bélanger
+#'@author Simon Belanger
 #'@export
 
 process.Ag <- function (sample, ID, Station, Depth, pathlength, DilutionFactor=1) {

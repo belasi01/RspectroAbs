@@ -23,7 +23,7 @@
 #'                Station="L3_20.5", Depth=99,pathlength=0.1)
 #' plot.Ag("./",Ag, PNG=FALSE)
 #'
-#' @author Simon Bélanger
+#' @author Simon Belanger
 #' @export
 #'
 plot.Ag <-function(path.png, Ag, PNG=TRUE){
