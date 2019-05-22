@@ -85,6 +85,7 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
 
   for (i in 1:nID) {
     load(paste(path,"/", Samples[i],".RData", sep=""))
+
     #load(file.path(path, Samples[i], ".RData"))
     Ag.raw[,i] = Ag$Ag
     Ag.offset[,i] = Ag$Ag.offset
