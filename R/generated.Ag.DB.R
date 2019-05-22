@@ -35,8 +35,12 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   # Lecture des informations dans un fichier texte
   #path = paste(data.path, "/RData/", sep="")
   if (file.exists(data.path)){
+<<<<<<< HEAD
     #path =paste(data.path,"/RData", sep="")
     path = file.path(data.path, "RData")
+=======
+    path =paste(data.path,"/RData", sep="")
+>>>>>>> c0caa651ea57c9209fd6f8ebc7ced4a8d7c51a63
     if (file.exists(path)) {
       print("Data path exists")
     } else {
