@@ -1,7 +1,7 @@
-#' Asemble the CDOM absorption data into a single data base
+#' Assemble the CDOM absorption data into a single data base
 #'
 #' This function assembles the CDOM data in a single data base and
-#' generate 1) one RData file, 2) on ASCII file and 3) one plot
+#' generate 1) one RData file, 2) two ASCII files and 3) one plot
 #' presenting all CDOM spectra.
 #'
 #' @param log.file is the name of the ASCII file containing the
@@ -68,8 +68,8 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
 
   print(paste("Number of samples is", nID))
 
-  #load(paste(path,Samples[1],".RData", sep=""))
-  load(file.path(path, Samples[1], ".RData"))
+  load(paste(path,"/",Samples[1],".RData", sep=""))
+  #load(file.path(path, Samples[1], ".RData"))
   waves = Ag$Lambda
   ix350 = which(waves == 350)
   Ag.raw   = matrix(NA, ncol = nID, nrow=length(waves))
@@ -84,8 +84,8 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   Depth = rep(NA, nID)
 
   for (i in 1:nID) {
-    #load(paste(path,Samples[i],".RData", sep=""))
-    load(file.path(path, Samples[i], ".RData"))
+    load(paste(path,"/", Samples[i],".RData", sep=""))
+    #load(file.path(path, Samples[i], ".RData"))
     Ag.raw[,i] = Ag$Ag
     Ag.offset[,i] = Ag$Ag.offset
     S275_295[i] = Ag$S275_295
@@ -100,7 +100,7 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
 
   # Save output in RData format
 
-  filen = paste(data.path,MISSION,".Ag.RData", sep="")
+  filen = paste(data.path, "/", MISSION,".Ag.RData", sep="")
   Ag.DB = list(waves=waves, Samples=Samples,
                Station = Station, Depth=Depth,
                Ag.raw=Ag.raw, Ag.offset=Ag.offset,
@@ -117,15 +117,15 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   Ag.df = as.data.frame(Ag.offset)
   names(Ag.df) <- Samples
   Ag.df$waves = waves
-  write.table(Ag.df, file=paste(data.path,MISSION,".Ag.dat",sep=""), quote=F, row.names = F, sep=";")
+  write.table(Ag.df, file=paste(data.path,"/",MISSION,".Ag.dat",sep=""), quote=F, row.names = F, sep=";")
 
   Fitted.df = data.frame(Samples, Station, Depth, S275_295, S350_400, S350_500, Sr, K, a440)
-  write.table(Fitted.df, file=paste(data.path,MISSION,".Fitted.params.dat", sep=""), quote=F, row.names = F, sep=";")
+  write.table(Fitted.df, file=paste(data.path,"/",MISSION,".Fitted.params.dat", sep=""), quote=F, row.names = F, sep=";")
 
 
   # plot all Ag
 
-  png(paste(data.path,MISSION,".Ag.png",sep=""), res=300, height = 6, width = 8, units = "in")
+  png(paste(data.path,"/",MISSION,".Ag.png",sep=""), res=300, height = 6, width = 8, units = "in")
   plot(waves, Ag.offset[,1], xlim=c(300,700), ylim=c(0,max(Ag.offset[ix350,],na.rm=T)), type="l",
        ylab=expression(paste(a[g],(lambda),(m^-1))), xlab=expression(lambda), col=8,
        main=paste(MISSION, ": CDOM absorption"))

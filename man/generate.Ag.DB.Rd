@@ -2,7 +2,7 @@
 % Please edit documentation in R/generated.Ag.DB.R
 \name{generate.Ag.DB}
 \alias{generate.Ag.DB}
-\title{Asemble the CDOM absorption data into a single data base}
+\title{Assemble the CDOM absorption data into a single data base}
 \usage{
 generate.Ag.DB(log.file = "Ag_log_TEMPLATE.dat", data.path = "./",
   MISSION = "YYY")
@@ -12,7 +12,7 @@ generate.Ag.DB(log.file = "Ag_log_TEMPLATE.dat", data.path = "./",
 list of samples to process (see details below).}
 
 \item{data.path}{is the path where the RData folder is located.
-So the files must be stored in data.path/RData/.  Default is "./".}
+So the files must be stored in data.path/RData.  Default is "./".}
 
 \item{MISSION}{is a character string that will be used to name
 the output files. The default is "YYY".
@@ -31,7 +31,7 @@ the function returns a list containing the following fields:
 }
 \description{
 This function assembles the CDOM data in a single data base and
-generate 1) one RData file, 2) on ASCII file and 3) one plot
+generate 1) one RData file, 2) two ASCII files and 3) one plot
 presenting all CDOM spectra.
 }
 \seealso{
