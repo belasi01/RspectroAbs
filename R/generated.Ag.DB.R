@@ -7,7 +7,7 @@
 #' @param log.file is the name of the ASCII file containing the
 #' list of samples to process (see details below).
 #' @param data.path is the path where the RData folder is located.
-#' So the files must be stored in data.path/RData/.  Default is "./".
+#' So the files must be stored in data.path/RData.  Default is "./".
 #' @param MISSION is a character string that will be used to name
 #' the output files. The default is "YYY".
 #' (i.e. MISSION.Ag.RData; MISSION.Ag.dat;
@@ -35,7 +35,8 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   # Lecture des informations dans un fichier texte
   #path = paste(data.path, "/RData/", sep="")
   if (file.exists(data.path)){
-    path =paste(data.path,"/RData/", sep="")
+    #path =paste(data.path,"/RData", sep="")
+    path = file.path(data.path, "RData")
     if (file.exists(path)) {
       print("Data path exists")
     } else {
@@ -66,7 +67,8 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
 
   print(paste("Number of samples is", nID))
 
-  load(paste(path,Samples[1],".RData", sep=""))
+  #load(paste(path,Samples[1],".RData", sep=""))
+  load(file.path(path, Samples[1], ".RData"))
   waves = Ag$Lambda
   ix350 = which(waves == 350)
   Ag.raw   = matrix(NA, ncol = nID, nrow=length(waves))
@@ -81,7 +83,8 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   Depth = rep(NA, nID)
 
   for (i in 1:nID) {
-    load(paste(path,Samples[i],".RData", sep=""))
+    #load(paste(path,Samples[i],".RData", sep=""))
+    load(file.path(path, Samples[i], ".RData"))
     Ag.raw[,i] = Ag$Ag
     Ag.offset[,i] = Ag$Ag.offset
     S275_295[i] = Ag$S275_295
