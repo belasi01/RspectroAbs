@@ -1,10 +1,36 @@
+#' Assemble the Ap absorption data into a single data base
+#'
+#' This function assembles the Ap data in a single data base and
+#' generate 1) three RData file, 2) three ASCII files and 3) three plot
+#' presenting all Ap, Anap and Aphy spectra.
+#'
+#' @param log.file is the name of the ASCII file containing the
+#' list of samples to process (see details below).
+#' @param data.path is the path where the RData folder is located.
+#' So the files must be stored in data.path/RData.  Default is "./".
+#' @param MISSION is a character string that will be used to name
+#' the output files. The default is "YYY".
+#' (i.e. MISSION.Ap.RData; MISSION.Ap.dat;
+#' MISSION.Fitted.params.dat; MISSION.Ap.png)
+#' @param Beta if the amplification factor your want to select. Default is Stramski.
+#'
+#' @return
+#'
+#' @seealso \code{\link{process.Ap}}, \code{\link{run.process.Ap.batch}}
+#'
+#' @author Simon Bélanger
+#'
+#' @export
+
 generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
                            MISSION="YYY", Beta="Stramski") {
 
   # Lecture des informations dans un fichier texte
   #path = paste(data.path, "/RData/", sep="")
   if (file.exists(data.path)){
-    path =paste(data.path,"/RData/", sep="")
+
+    path = file.path(data.path, "RData")
+
     if (file.exists(path)) {
       print("Data path exists")
     } else {
@@ -16,7 +42,7 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
     }
   } else {
     print("The data.path does not exits.")
-    print("Put the data in data.path/RData/")
+    print("Put the data in data.path/RData")
     print("STOP processing")
     return(0)
   }
@@ -33,7 +59,7 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
   Samples = levels(droplevels(Ap.log$ID[ix]))
   nID = length(Samples)
 
-  load(paste(path,Samples[1],".RData", sep=""))
+  load(paste(path, "/", Samples[1],".RData", sep=""))
   waves = A$Ap$Lambda
   Ap   = matrix(NA, ncol = nID, nrow=length(waves))
   Anap = Ap
@@ -41,7 +67,7 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
   Snap = rep(NA, nID)
   Cnap = rep(NA, nID)
   for (i in 1:nID) {
-    load(paste(path,Samples[i],".RData", sep=""))
+    load(paste(path, "/", Samples[i],".RData", sep=""))
 
     ix.st = which(Ap.log$ID == Samples[i])
     NAP.method = Ap.log$NAP.method[ix.st[1]]
@@ -107,15 +133,15 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
 
   # Save output in RData format
 
-  filen = paste(data.path,MISSION,".Ap.", Beta, ".RData", sep="")
+  filen = paste(data.path,"/", MISSION,".Ap.", Beta, ".RData", sep="")
   Ap.DB = list(Ap =Ap, waves=waves, Samples=Samples)
   save(Ap.DB, file=filen)
 
-  filen = paste(data.path,MISSION,".Anap.", Beta, ".RData", sep="")
+  filen = paste(data.path,"/", MISSION,".Anap.", Beta, ".RData", sep="")
   Anap.DB = list(Anap =Anap, Snap=Snap, Cnap=Cnap, waves=waves, Samples=Samples)
   save(Anap.DB, file=filen)
 
-  filen = paste(data.path,MISSION,".Aph.", Beta, ".RData",sep="")
+  filen = paste(data.path,"/", MISSION,".Aph.", Beta, ".RData",sep="")
   Aph.DB = list(Aph =Aph, waves=waves, Samples=Samples)
   save(Aph.DB, file=filen)
 
@@ -124,26 +150,26 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
   Ap.df = as.data.frame(Ap)
   names(Ap.df) <- Samples
   Ap.df$waves = waves
-  write.table(Ap.df, file=paste(data.path,MISSION,".Ap.", Beta, ".dat",sep=""), quote=F, row.names = F, sep=";")
+  write.table(Ap.df, file=paste(data.path,"/", MISSION,".Ap.", Beta, ".dat",sep=""), quote=F, row.names = F, sep=";")
 
 
   Anap.df = as.data.frame(Anap)
   names(Anap.df) <- Samples
   Anap.df$waves = waves
-  write.table(Anap.df, file=paste(data.path,MISSION,".Anap.", Beta, ".dat", sep=""), quote=F, row.names = F, sep=";")
+  write.table(Anap.df, file=paste(data.path,"/", MISSION,".Anap.", Beta, ".dat", sep=""), quote=F, row.names = F, sep=";")
 
   Aph.df = as.data.frame(Aph)
   names(Aph.df) <- Samples
   Aph.df$waves = waves
-  write.table(Aph.df, file=paste(data.path,MISSION,".Aph.", Beta, ".dat", sep=""), quote=F, row.names = F, sep=";")
+  write.table(Aph.df, file=paste(data.path,"/", MISSION,".Aph.", Beta, ".dat", sep=""), quote=F, row.names = F, sep=";")
 
   S.df = data.frame(Samples, Snap, Cnap)
-  write.table(S.df, file=paste(data.path,MISSION,".Snap.", Beta, ".dat", sep=""), quote=F, row.names = F, sep=";")
+  write.table(S.df, file=paste(data.path,"/", MISSION,".Snap.", Beta, ".dat", sep=""), quote=F, row.names = F, sep=";")
 
 
   # plot all Ap, Anap and Aphy
 
-  png(paste(data.path,MISSION,".Ap.", Beta, ".png",sep=""), res=300, height = 6, width = 8, units = "in")
+  png(paste(data.path,"/", MISSION,".Ap.", Beta, ".png",sep=""), res=300, height = 6, width = 8, units = "in")
   plot(waves, Ap[,1], xlim=c(300,700), ylim=c(0,max(Ap,na.rm=T)), type="l",
        ylab=expression(paste(a[p],(lambda),(m^-1))), xlab=expression(lambda), col=8,
        main=paste(MISSION, ": Particulate absorption"))
@@ -155,7 +181,7 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
   lines(waves, (mean.Ap+sd.Ap), lwd=2, lty=2)
   dev.off()
 
-  png(paste(data.path,MISSION,".Anap.", Beta, ".png",sep=""), res=300, height = 6, width = 8, units = "in")
+  png(paste(data.path,"/", MISSION,".Anap.", Beta, ".png",sep=""), res=300, height = 6, width = 8, units = "in")
   plot(waves, Anap[,1], xlim=c(300,700), ylim=c(0,max(Anap,na.rm=T)), type="l",
        ylab=expression(paste(a[nap],(lambda),(m^-1))), xlab=expression(lambda), col=8,
        main=paste(MISSION, ": Non-algal absorption"))
@@ -167,7 +193,7 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
   lines(waves, (mean.Anap+sd.Anap), lwd=2, lty=2)
   dev.off()
 
-  png(paste(data.path,MISSION,".Aph.", Beta, ".png",sep=""), res=300, height = 6, width = 8, units = "in")
+  png(paste(data.path,"/", MISSION,".Aph.", Beta, ".png",sep=""), res=300, height = 6, width = 8, units = "in")
   plot(waves, Aph[,1], xlim=c(300,700), ylim=c(0,max(Aph,na.rm=T)), type="l",
        ylab=expression(paste(a[phi],(lambda),(m^-1))), xlab=expression(lambda), col=8,
        main=paste(MISSION, ": Phytoplankton absorption"))
