@@ -53,7 +53,7 @@ run.process.Ag.batch <- function(log.file="Ag_log_TEMPLATE.dat",
 
   if (file.exists(data.path)){
 
-    if (instrument == "LAMBDA850"){
+    if (instrument == "LAMBDA850" | instrument == "LAMBDA35"){
       path.csv =  file.path(data.path,"csv")   #paste(data.path,"/csv/", sep="")
       if (file.exists(path.csv)) {
         print("Data path exists")
@@ -83,7 +83,7 @@ run.process.Ag.batch <- function(log.file="Ag_log_TEMPLATE.dat",
 
   } else {
     print("The data.path does not exits.")
-    print("Put the data in data.path/csv/ (LAMBDA850) or data.path/txt (ULTRAPATH)")
+    print("Put the data in data.path/csv/ (LAMBDA850, LAMBDA35) or data.path/txt (ULTRAPATH)")
     print("STOP processing")
     return(0)
   }
@@ -127,6 +127,8 @@ run.process.Ag.batch <- function(log.file="Ag_log_TEMPLATE.dat",
           sample = data.frame(s$wl, (s$OD - r$OD))
           names(sample) <- c("wl","OD")
       }
+
+      if (instrument == "LAMBDA35") sample = read.LAMBDA35(paste(path.csv,"/",basename, sep=""))
 
       # Convert OD to absorption and compute various index.
       Ag = process.Ag(sample,
