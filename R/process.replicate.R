@@ -67,7 +67,7 @@ process.replicate <- function(path, path.png, ID, Station, SpecType, Repl, Depth
   p1 <- p1 + ggtitle("Beta factor from Stramski et al. 2015")
   print(p1)
   dev.off()
-  print(p1)
+  #print(p1)
 
   return(list(ID = ID,
               Station=Station,

@@ -29,7 +29,8 @@ list of samples to process. It calls \code{\link{process.Ag}}.
 }
 \details{
 The most important thing to do before runing this programm is to prepare
-the log.file. This file contains 6 fields : ID  Station  Depth	pathlength Ag.good DilutionFactor
+the log.file (TAB delimated).
+This file contains 6 fields : ID  Station  Depth	pathlength Ag.good DilutionFactor
 
 ID is the sample ID. It is usually the base name of the CSV file.
    for example, 407839 ID will have the following file name: 407839.Sample.Raw.csv.
