@@ -6,4 +6,4 @@
 #   Ag.good  =0 pour ne pas traité le spectre, =1 pour le traitement
 #   DilutionFactor  This is a factor for dilution. Default is 1
 #######################################################
-ID	Station	Depth	pathlength	Ag.good DilutionFactor
+ID  Station Depth pathlength  Ag.good DilutionFactor

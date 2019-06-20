@@ -20,13 +20,15 @@ list of samples to process. It calls \code{\link{process.Ap}}.
 }
 \details{
 The most important thing to do before runing this programm is to prepare
-the log.file. This file contains 11 fields :
+the log.file. This file contains 11 fields (TAB delimated) :
 
   ID         Unique ID of the sample
 
   Repl       A letter corresponding to the replicat (A,B,C,etc)
 
   Station    Station name
+
+  Date       Date of sampling
 
   Depth      Depth of the sample
 

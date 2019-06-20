@@ -5,7 +5,7 @@
 #' presenting all Ap, Anap and Aphy spectra.
 #'
 #' @param log.file is the name of the ASCII file containing the
-#' list of samples to process (see details below).
+#' list of ID to process (see details below).
 #' @param data.path is the path where the RData folder is located.
 #' So the files must be stored in data.path/RData.  Default is "./".
 #' @param MISSION is a character string that will be used to name
@@ -54,23 +54,37 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
   }
 
 
-  Ap.log = read.table(file=log.file, header=T)
-  ix = which(Ap.log$process == 1)
-  Samples = levels(droplevels(Ap.log$ID[ix]))
-  nID = length(Samples)
+  Ap.log = read.table(file=log.file, header=T, sep="\t")
+  names(Ap.log)<-str_to_upper(names(Ap.log))
 
-  load(paste(path, "/", Samples[1],".RData", sep=""))
+  ix = which(Ap.log$PROCESS == 1)
+  ID = levels(droplevels(Ap.log$ID[ix]))
+  nID = length(ID)
+
+  load(paste(path, "/", ID[1],".RData", sep=""))
   waves = A$Ap$Lambda
   Ap   = matrix(NA, ncol = nID, nrow=length(waves))
   Anap = Ap
   Aph  = Ap
   Snap = rep(NA, nID)
   Cnap = rep(NA, nID)
-  for (i in 1:nID) {
-    load(paste(path, "/", Samples[i],".RData", sep=""))
+  Station = rep(NA, nID)
+  Date = rep(NA, nID)
+  Depth = rep(NA, nID)
 
-    ix.st = which(Ap.log$ID == Samples[i])
-    NAP.method = Ap.log$NAP.method[ix.st[1]]
+  for (i in 1:nID) {
+    load(paste(path, "/", ID[i],".RData", sep=""))
+
+<<<<<<< HEAD
+    ix.ID = which(Ap.log$ID == ID[i])
+    NAP.method = Ap.log$NAP.METHOD[ix.ID[1]]
+    Station[i] = as.character(A$Ap$Station)
+    Date[i]    = A$Ap$Date
+    Depth[i]   = A$Ap$Depth
+=======
+    ix.st = which(Ap.log$ID == ID[i])
+    NAP.method = Ap.log$NAP.METHOD[ix.st[1]]
+>>>>>>> bf60b8e9f7aa0c980d059d6ea1c189b946a36171
 
     if (Beta == "Stramski") {
       Ap[,i] = A$Ap$Ap.Stramski.mean
@@ -134,36 +148,62 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
   # Save output in RData format
 
   filen = paste(data.path,"/", MISSION,".Ap.", Beta, ".RData", sep="")
-  Ap.DB = list(Ap =Ap, waves=waves, Samples=Samples)
+<<<<<<< HEAD
+  Ap.DB = list(Ap =Ap, waves=waves, ID=ID, Station=Station, Date=Date, Depth=Depth)
   save(Ap.DB, file=filen)
 
   filen = paste(data.path,"/", MISSION,".Anap.", Beta, ".RData", sep="")
-  Anap.DB = list(Anap =Anap, Snap=Snap, Cnap=Cnap, waves=waves, Samples=Samples)
+  Anap.DB = list(Anap =Anap, Snap=Snap, Cnap=Cnap, waves=waves, ID=ID, Station=Station, Date=Date, Depth=Depth)
   save(Anap.DB, file=filen)
 
   filen = paste(data.path,"/", MISSION,".Aph.", Beta, ".RData",sep="")
-  Aph.DB = list(Aph =Aph, waves=waves, Samples=Samples)
+  Aph.DB = list(Aph =Aph, waves=waves, ID=ID, Station=Station, Date=Date, Depth=Depth)
+=======
+  Ap.DB = list(Ap =Ap, waves=waves, ID=ID)
+  save(Ap.DB, file=filen)
+
+  filen = paste(data.path,"/", MISSION,".Anap.", Beta, ".RData", sep="")
+  Anap.DB = list(Anap =Anap, Snap=Snap, Cnap=Cnap, waves=waves, ID=ID)
+  save(Anap.DB, file=filen)
+
+  filen = paste(data.path,"/", MISSION,".Aph.", Beta, ".RData",sep="")
+  Aph.DB = list(Aph =Aph, waves=waves, ID=ID)
+>>>>>>> bf60b8e9f7aa0c980d059d6ea1c189b946a36171
   save(Aph.DB, file=filen)
 
   # Save output in ASCII format
 
   Ap.df = as.data.frame(Ap)
-  names(Ap.df) <- Samples
+  names(Ap.df) <- ID
   Ap.df$waves = waves
+  Ap.df <-rbind(Ap.df, c(Station,NA))
+  Ap.df <-rbind(Ap.df,c(Date,NA))
+  Ap.df <-rbind(Ap.df,c(Depth,NA))
   write.table(Ap.df, file=paste(data.path,"/", MISSION,".Ap.", Beta, ".dat",sep=""), quote=F, row.names = F, sep=";")
 
 
   Anap.df = as.data.frame(Anap)
-  names(Anap.df) <- Samples
+  names(Anap.df) <- ID
   Anap.df$waves = waves
+  Anap.df <-rbind(Anap.df, c(Station,NA))
+  Anap.df <-rbind(Anap.df,c(Date,NA))
+  Anap.df <-rbind(Anap.df,c(Depth,NA))
   write.table(Anap.df, file=paste(data.path,"/", MISSION,".Anap.", Beta, ".dat", sep=""), quote=F, row.names = F, sep=";")
 
   Aph.df = as.data.frame(Aph)
-  names(Aph.df) <- Samples
+  names(Aph.df) <- ID
   Aph.df$waves = waves
+  Aph.df <-rbind(Aph.df, c(Station,NA))
+  Aph.df <-rbind(Aph.df,c(Date,NA))
+  Aph.df <-rbind(Aph.df,c(Depth,NA))
   write.table(Aph.df, file=paste(data.path,"/", MISSION,".Aph.", Beta, ".dat", sep=""), quote=F, row.names = F, sep=";")
 
-  S.df = data.frame(Samples, Snap, Cnap)
+<<<<<<< HEAD
+  S.df = data.frame(ID, Snap, Cnap, Station, Depth, Date)
+
+=======
+  S.df = data.frame(ID, Snap, Cnap)
+>>>>>>> bf60b8e9f7aa0c980d059d6ea1c189b946a36171
   write.table(S.df, file=paste(data.path,"/", MISSION,".Snap.", Beta, ".dat", sep=""), quote=F, row.names = F, sep=";")
 
 
@@ -213,7 +253,7 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
   plot(waves, Aph[,1]/Aph[ix443,1], xlim=c(300,700), ylim=c(0,2), type="l",
        ylab=expression(paste(a[phi],(lambda),"/", a[phi],(443))), xlab=expression(lambda), col=8,
        main=paste(MISSION, ": Normalized phytoplankton absorption"))
-  for (i in 2:length(Samples)) lines(waves, Aph[,i]/Aph[ix443,i],col=8)
+  for (i in 2:length(ID)) lines(waves, Aph[,i]/Aph[ix443,i],col=8)
   lines(waves, mean.Aph/mean.Aph[ix443], lwd=2)
   dev.off()
 

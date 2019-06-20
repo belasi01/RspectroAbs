@@ -5,7 +5,7 @@
 \title{Compute phytoplankton absorption spectrum in batch mode}
 \usage{
 run.compute.Aph.batch(log.file = "Ap_log_TEMPLATE.dat",
-  data.path = "./")
+  data.path = "./", PLOT = FALSE)
 }
 \arguments{
 \item{log.file}{is the name of the ASCII file containing the list of
@@ -13,6 +13,9 @@ samples to process.}
 
 \item{data.path}{is the path where the csv folder is located.
 So the files must be stored in data.path/csv/.  Default is "./".}
+
+\item{PLOT}{is a logical parameter indicating whether the plot are generated
+in the RStudio interface. Default is FALSE.}
 }
 \value{
 It produces plots with the spectra returned by \code{\link{compute.Aph}}

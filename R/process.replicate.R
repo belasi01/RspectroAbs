@@ -8,12 +8,12 @@
 #             with an eveloppe corresponding to 1.96*s.dev.
 #         4. A plot showing Ap, Anap and Aph based on the averages of plot #3
 #
-#   The data in the third plot and Aph are saved in an RData file, which give on file
+#   The data in the third plot and Aph are saved in an RData file, which give one file
 #   per discrete water sample.
 #
 #
 
-process.replicate <- function(path, path.png, ID, Station, SpecType, Repl, Depth){
+process.replicate <- function(path, path.png, ID, Station, SpecType, Repl, Depth, Date){
 
   nRepl = length(Repl)
   Ap_list = list()
@@ -67,13 +67,14 @@ process.replicate <- function(path, path.png, ID, Station, SpecType, Repl, Depth
   p1 <- p1 + ggtitle("Beta factor from Stramski et al. 2015")
   print(p1)
   dev.off()
-  print(p1)
+  #print(p1)
 
   return(list(ID = ID,
               Station=Station,
               SpecType=SpecType,
               Repl = Repl,
               Depth = Depth,
+              Date = Date,
               Lambda = Wl,
               Ap.Stramski.mean=Ap.Stramski.mean,
               Ap.RG.mean=Ap.RG.mean,

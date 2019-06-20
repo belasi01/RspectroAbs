@@ -5,7 +5,7 @@
 #' presenting all CDOM spectra.
 #'
 #' @param log.file is the name of the ASCII file containing the
-#' list of samples to process (see details below).
+#' list of ID to process (see details below).
 #' @param data.path is the path where the RData folder is located.
 #' So the files must be stored in data.path/RData.  Default is "./".
 #' @param MISSION is a character string that will be used to name
@@ -14,7 +14,7 @@
 #' MISSION.Fitted.params.dat; MISSION.Ag.png)
 #'
 #' @return the function returns a list containing the following fields:
-#'   waves, Samples, Station, Depth,Ag.raw, Ag.offset,S275_295,
+#'   waves, ID, Station, Depth,Ag.raw, Ag.offset,S275_295,
 #'   S350_400, S350_500, Sr, K, a440.
 #'
 #'   This list (Ag.DB) is save in MISSION.Ag.RData.
@@ -61,15 +61,15 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   }
 
 
-  Ag.log = read.table(file=log.file, header=T)
+  Ag.log = read.table(file=log.file, header=T,  sep="\t")
   ix = which(Ag.log$Ag.good == 1)
-  Samples = Ag.log$ID[ix]
-  nID = length(Samples)
+  ID = Ag.log$ID[ix]
+  nID = length(ID)
 
-  print(paste("Number of samples is", nID))
+  print(paste("Number of ID is", nID))
 
-  load(paste(path,"/",Samples[1],".RData", sep=""))
-  #load(file.path(path, Samples[1], ".RData"))
+  load(paste(path,"/",ID[1],".RData", sep=""))
+  #load(file.path(path, ID[1], ".RData"))
   waves = Ag$Lambda
   ix350 = which(waves == 350)
   Ag.raw   = matrix(NA, ncol = nID, nrow=length(waves))
@@ -84,9 +84,9 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   Depth = rep(NA, nID)
 
   for (i in 1:nID) {
-    load(paste(path,"/", Samples[i],".RData", sep=""))
+    load(paste(path,"/", ID[i],".RData", sep=""))
 
-    #load(file.path(path, Samples[i], ".RData"))
+    #load(file.path(path, ID[i], ".RData"))
     Ag.raw[,i] = Ag$Ag
     Ag.offset[,i] = Ag$Ag.offset
     S275_295[i] = Ag$S275_295
@@ -102,7 +102,7 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   # Save output in RData format
 
   filen = paste(data.path, "/", MISSION,".Ag.RData", sep="")
-  Ag.DB = list(waves=waves, Samples=Samples,
+  Ag.DB = list(waves=waves, ID=ID,
                Station = Station, Depth=Depth,
                Ag.raw=Ag.raw, Ag.offset=Ag.offset,
                S275_295=S275_295,
@@ -116,11 +116,11 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   # Save output in ASCII format
 
   Ag.df = as.data.frame(Ag.offset)
-  names(Ag.df) <- Samples
+  names(Ag.df) <- ID
   Ag.df$waves = waves
   write.table(Ag.df, file=paste(data.path,"/",MISSION,".Ag.dat",sep=""), quote=F, row.names = F, sep=";")
 
-  Fitted.df = data.frame(Samples, Station, Depth, S275_295, S350_400, S350_500, Sr, K, a440)
+  Fitted.df = data.frame(ID, Station, Depth, S275_295, S350_400, S350_500, Sr, K, a440)
   write.table(Fitted.df, file=paste(data.path,"/",MISSION,".Fitted.params.dat", sep=""), quote=F, row.names = F, sep=";")
 
 

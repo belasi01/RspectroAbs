@@ -9,7 +9,7 @@ generate.Ag.DB(log.file = "Ag_log_TEMPLATE.dat", data.path = "./",
 }
 \arguments{
 \item{log.file}{is the name of the ASCII file containing the
-list of samples to process (see details below).}
+list of ID to process (see details below).}
 
 \item{data.path}{is the path where the RData folder is located.
 So the files must be stored in data.path/RData.  Default is "./".}
@@ -21,7 +21,7 @@ MISSION.Fitted.params.dat; MISSION.Ag.png)}
 }
 \value{
 the function returns a list containing the following fields:
-  waves, Samples, Station, Depth,Ag.raw, Ag.offset,S275_295,
+  waves, ID, Station, Depth,Ag.raw, Ag.offset,S275_295,
   S350_400, S350_500, Sr, K, a440.
 
   This list (Ag.DB) is save in MISSION.Ag.RData.

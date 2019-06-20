@@ -5,7 +5,7 @@
 \title{Process raw optical depth to Ap spectra using filter-pad technique}
 \usage{
 process.Ap(sample, blank, Farea = NA, Vol.ml = NA, SpecType = NA, ID,
-  Station, Repl, Depth)
+  Station, Repl, Depth, Date)
 }
 \arguments{
 \item{sample}{is a data frame return by \code{\link{read.LAMBDA850}} for the measured optical depth
@@ -30,6 +30,8 @@ This field is mandatory.}
 \item{Repl}{is a Capital Letter or number corresponding of the replicat ("A", "B",... or "1", etc)}
 
 \item{Depth}{is the depth of the sample in meters.}
+
+\item{Date}{is the date of sampling.}
 }
 \value{
 Returns a list containing metadata provided to the function as well as the vector of OD corrected for blank,

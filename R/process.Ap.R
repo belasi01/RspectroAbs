@@ -18,6 +18,7 @@
 #'@param Station is the station code.
 #'@param Repl is a Capital Letter or number corresponding of the replicat ("A", "B",... or "1", etc)
 #'@param Depth is the depth of the sample in meters.
+#'@param Date is the date of sampling.
 #'
 #'@return Returns a list containing metadata provided to the function as well as the vector of OD corrected for blank,
 #'the OD of the blank filter and 3 estimation of particle absorption:
@@ -28,7 +29,7 @@
 #'}
 #
 process.Ap <- function (sample, blank, Farea=NA, Vol.ml=NA,
-                        SpecType=NA, ID, Station, Repl, Depth){
+                        SpecType=NA, ID, Station, Repl, Depth, Date){
   Vol.m3 = Vol.ml/1e6
   ODc = sample$OD - blank$OD
 
@@ -48,6 +49,7 @@ process.Ap <- function (sample, blank, Farea=NA, Vol.ml=NA,
               SpecType=SpecType,
               Repl = Repl,
               Depth = Depth,
+              Date = Date,
               Vol = Vol.m3,
               Farea = Farea,
               Lambda = sample$wl,

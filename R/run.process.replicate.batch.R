@@ -1,32 +1,4 @@
 
-
-######### Ligne à éditer pour le batch mode
-#batch.mode = 1  # On doit mettre = 1 pour traiter les fichiers en batch
-#log.file = "~/Copy/data/BoueesIML/2015/Log/Ap_log_IML4_2015.txt"  # Fichier TXT avec: ID  Repl  Station  Depth	Vol	Farea	blank.file	Ap.good	NAp.good
-#path = "~/Copy/data/BoueesIML/2015/Ap/RData/"
-#MISSION = "IML4"
-#path.out = "~/Copy/data/BoueesIML/2015/Ap/RData/"
-#path.png = "~/Copy/data/BoueesIML/2015/Ap/png/"
-
-
-#log.file = "~/Copy/data/Riverscape2013/Log/Ap_log_Riverscape_2013.txt"  # Fichier TXT avec: ID  Repl  Station  Depth	Vol	Farea	blank.file	Ap.good	NAp.good
-#path = "~/Copy/data/Riverscape2013/ApAnapAphy/RData_V3/"
-#MISSION = "Riverscape"
-#path.out = "~/Copy/data/Riverscape2013/ApAnapAphy/RData_V3/"
-#path.png = "~/Copy/data/Riverscape2013/ApAnapAphy/png_V3/"
-
-# IMPORTANT: Les colonnes Ap.good et NAp.good à la fin du fichier LOG servent à
-# sélectionner les fichiers qu'on veut retenir pour la moyenne (0 indique que le spectre est éliminé)
-
-########## Lignes à éditer pour le traitement d'un seul fichier (batch.mode = 0).
-#ID = "IML4_20150603"
-#Repl = c("01", "02") # êrmet de slectionner les spectres qu'on désire garder pour la moyenne
-#SpecType = "NAp"
-#Station = "IML4"
-#Depth = 0
-
-
-
 run.process.replicate.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./") {
 
 
@@ -49,36 +21,47 @@ run.process.replicate.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.pat
     return(0)
   }
 
-  Ap.log = read.table(file=log.file, header=T)
-  ix = which(Ap.log$process == 1)
-  Stations = levels(droplevels(Ap.log$ID[ix]))
-  nID = length(Stations)
+  Ap.log = read.table(file=log.file, header=T, sep="\t")
+  names(Ap.log)<-str_to_upper(names(Ap.log))
+  ix = which(Ap.log$PROCESS == 1)
+  IDs = levels(droplevels(Ap.log$ID[ix]))
+  nID = length(IDs)
+  print(paste("Total number of IDs to process:", nID))
+
   for (i in 1:nID) {
 
-    ix = which(Ap.log$ID == Stations[i])
+    print(paste("ID",i," out of", nID))
+    ix = which(Ap.log$ID == IDs[i])
 
-    #if (MISSION == "IML4") Replicates = paste("0", Ap.log$Repl[ix], sep="")
-    #if (MISSION == "Riverscape") Replicates = Ap.log$Repl[ix]
-    Replicates = Ap.log$Repl[ix]
+    Replicates = Ap.log$REPL[ix]
 
-    if (any(Ap.log$Ap.good[ix] == 1)) {
-      Ap = process.replicate(path,path.png,  Stations[i], Ap.log$Station[ix[1]],
-                             "Ap", Replicates[Ap.log$Ap.good[ix] == 1],
-                             Ap.log$Depth[ix[1]])
+    if (any(Ap.log$AP.GOOD[ix] == 1)) {
+      Ap = process.replicate(path,path.png,  IDs[i], Ap.log$STATION[ix[1]],
+                              "Ap", Replicates[Ap.log$AP.GOOD[ix] == 1],
+<<<<<<< HEAD
+                              Ap.log$DEPTH[ix[1]], Ap.log$DATE[ix[1]])
+=======
+                              Ap.log$DEPTH[ix[1]])
+>>>>>>> bf60b8e9f7aa0c980d059d6ea1c189b946a36171
 
-      save(Ap, file=paste(path.out,Stations[i],"_" , "Ap",".RData", sep=""))
+
+      save(Ap, file=paste(path.out,IDs[i],"_" , "Ap",".RData", sep=""))
 
     } else {
       print("No good Ap spectra!!! Check Log file")
     }
 
-    if (any(Ap.log$NAp.good[ix] == 1)) {
+    if (any(Ap.log$NAP.GOOD[ix] == 1)) {
 
-      Ap = process.replicate(path,path.png,  Stations[i], Ap.log$Station[ix[1]],
-                             "NAp", Replicates[Ap.log$NAp.good[ix] == 1],
-                             Ap.log$Depth[ix[1]])
+      Ap = process.replicate(path,path.png,  IDs[i], Ap.log$STATION[ix[1]],
+                             "NAp", Replicates[Ap.log$NAP.GOOD[ix] == 1],
+<<<<<<< HEAD
+                             Ap.log$DEPTH[ix[1]], Ap.log$DATE[ix[1]])
+=======
+                             Ap.log$DEPTH[ix[1]])
+>>>>>>> bf60b8e9f7aa0c980d059d6ea1c189b946a36171
 
-      save(Ap, file=paste(path.out,Stations[i],"_" , "NAp",".RData", sep=""))
+      save(Ap, file=paste(path.out,IDs[i],"_" , "NAp",".RData", sep=""))
     } else {
       print("No good NAP spectra!!! Check Log file")
     }
