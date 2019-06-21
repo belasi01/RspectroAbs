@@ -38,11 +38,8 @@ run.process.replicate.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.pat
     if (any(Ap.log$AP.GOOD[ix] == 1)) {
       Ap = process.replicate(path,path.png,  IDs[i], Ap.log$STATION[ix[1]],
                               "Ap", Replicates[Ap.log$AP.GOOD[ix] == 1],
-<<<<<<< HEAD
                               Ap.log$DEPTH[ix[1]], Ap.log$DATE[ix[1]])
-=======
-                              Ap.log$DEPTH[ix[1]])
->>>>>>> bf60b8e9f7aa0c980d059d6ea1c189b946a36171
+
 
 
       save(Ap, file=paste(path.out,IDs[i],"_" , "Ap",".RData", sep=""))
@@ -55,11 +52,8 @@ run.process.replicate.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.pat
 
       Ap = process.replicate(path,path.png,  IDs[i], Ap.log$STATION[ix[1]],
                              "NAp", Replicates[Ap.log$NAP.GOOD[ix] == 1],
-<<<<<<< HEAD
                              Ap.log$DEPTH[ix[1]], Ap.log$DATE[ix[1]])
-=======
-                             Ap.log$DEPTH[ix[1]])
->>>>>>> bf60b8e9f7aa0c980d059d6ea1c189b946a36171
+
 
       save(Ap, file=paste(path.out,IDs[i],"_" , "NAp",".RData", sep=""))
     } else {

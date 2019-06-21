@@ -151,11 +151,8 @@ run.process.Ap.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./")
         return(0)
       }
 
-<<<<<<< HEAD
       # Calcul de l'absorption des  particules non-algales
-=======
-      # Calcul de l'absorption
->>>>>>> bf60b8e9f7aa0c980d059d6ea1c189b946a36171
+
       Ap = process.Ap(sample, blank, Ap.log$FAREA[i], Ap.log$VOL[i],
                       Ap.log$ID[i], Ap.log$STATION[i], "NAp",
                       Ap.log$REPL[i], Ap.log$DEPTH[i], Ap.log$DATE[i])

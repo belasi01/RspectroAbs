@@ -75,16 +75,11 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
   for (i in 1:nID) {
     load(paste(path, "/", ID[i],".RData", sep=""))
 
-<<<<<<< HEAD
     ix.ID = which(Ap.log$ID == ID[i])
     NAP.method = Ap.log$NAP.METHOD[ix.ID[1]]
     Station[i] = as.character(A$Ap$Station)
     Date[i]    = A$Ap$Date
     Depth[i]   = A$Ap$Depth
-=======
-    ix.st = which(Ap.log$ID == ID[i])
-    NAP.method = Ap.log$NAP.METHOD[ix.st[1]]
->>>>>>> bf60b8e9f7aa0c980d059d6ea1c189b946a36171
 
     if (Beta == "Stramski") {
       Ap[,i] = A$Ap$Ap.Stramski.mean
@@ -148,7 +143,6 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
   # Save output in RData format
 
   filen = paste(data.path,"/", MISSION,".Ap.", Beta, ".RData", sep="")
-<<<<<<< HEAD
   Ap.DB = list(Ap =Ap, waves=waves, ID=ID, Station=Station, Date=Date, Depth=Depth)
   save(Ap.DB, file=filen)
 
@@ -158,17 +152,7 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
 
   filen = paste(data.path,"/", MISSION,".Aph.", Beta, ".RData",sep="")
   Aph.DB = list(Aph =Aph, waves=waves, ID=ID, Station=Station, Date=Date, Depth=Depth)
-=======
-  Ap.DB = list(Ap =Ap, waves=waves, ID=ID)
-  save(Ap.DB, file=filen)
 
-  filen = paste(data.path,"/", MISSION,".Anap.", Beta, ".RData", sep="")
-  Anap.DB = list(Anap =Anap, Snap=Snap, Cnap=Cnap, waves=waves, ID=ID)
-  save(Anap.DB, file=filen)
-
-  filen = paste(data.path,"/", MISSION,".Aph.", Beta, ".RData",sep="")
-  Aph.DB = list(Aph =Aph, waves=waves, ID=ID)
->>>>>>> bf60b8e9f7aa0c980d059d6ea1c189b946a36171
   save(Aph.DB, file=filen)
 
   # Save output in ASCII format
@@ -198,12 +182,8 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
   Aph.df <-rbind(Aph.df,c(Depth,NA))
   write.table(Aph.df, file=paste(data.path,"/", MISSION,".Aph.", Beta, ".dat", sep=""), quote=F, row.names = F, sep=";")
 
-<<<<<<< HEAD
   S.df = data.frame(ID, Snap, Cnap, Station, Depth, Date)
 
-=======
-  S.df = data.frame(ID, Snap, Cnap)
->>>>>>> bf60b8e9f7aa0c980d059d6ea1c189b946a36171
   write.table(S.df, file=paste(data.path,"/", MISSION,".Snap.", Beta, ".dat", sep=""), quote=F, row.names = F, sep=";")
 
 
