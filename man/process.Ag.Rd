@@ -5,7 +5,8 @@
 \title{Process raw optical depth to CDOM spectra and analyse the spectral
  shape using \pkg{cdom} package functionalities.}
 \usage{
-process.Ag(sample, ID, Station, Depth, pathlength, DilutionFactor = 1)
+process.Ag(sample, ID, Station, Depth, Date, pathlength,
+  DilutionFactor = 1)
 }
 \arguments{
 \item{sample}{is a data frame return by \code{\link{read.LAMBDA850}} or
@@ -17,6 +18,8 @@ and Optical Depth (OD).}
 \item{Station}{is the station code (optional).}
 
 \item{Depth}{is the depth of the sample in meters (optional).}
+
+\item{Date}{is the date of sampling.}
 
 \item{pathlength}{is the pathlength of the cuvette in meters.}
 

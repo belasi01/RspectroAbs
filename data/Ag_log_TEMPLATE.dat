@@ -2,8 +2,9 @@
 #   ID      est la base du nom de fichier et l'indentifiant qui permet de joindre aux autres paramètres
 #   Station est le nom de la station
 #   Depth   est la profondeur de l'échantillon en m
+#   Date est la date d'echantillonnage
 #   pathlenght est la longueur du chemin optique en m
 #   Ag.good  =0 pour ne pas traité le spectre, =1 pour le traitement
 #   DilutionFactor  This is a factor for dilution. Default is 1
 #######################################################
-ID  Station Depth pathlength  Ag.good DilutionFactor
+ID  Station Depth Date  pathlength  Ag.good DilutionFactor

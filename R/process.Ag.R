@@ -12,6 +12,7 @@
 #'@param ID is the sample ID.
 #'@param Station is the station code (optional).
 #'@param Depth is the depth of the sample in meters (optional).
+#'@param Date is the date of sampling.
 #'@param pathlength is the pathlength of the cuvette in meters.
 #'@param DilutionFactor Is a multiplication factor to adjust the final Ag value if dilution was
 #' performed in the lab (default=1).
@@ -41,7 +42,7 @@
 #'@author Simon Belanger
 #'@export
 
-process.Ag <- function (sample, ID, Station, Depth, pathlength, DilutionFactor=1) {
+process.Ag <- function (sample, ID, Station, Depth, Date,  pathlength, DilutionFactor=1) {
 
   ix690 = which(sample$wl == 690)
   ix500 = which(sample$wl == 500)
@@ -63,17 +64,17 @@ process.Ag <- function (sample, ID, Station, Depth, pathlength, DilutionFactor=1
   names(df) <- c("Wavelength", "Ag")
 
   # 350 to 500 nm spectral range
-  S350_500 = cdom_fit_exponential(sample$wl, Ag.offset,440, 350,500)$params[1,2]
-  K = cdom_fit_exponential(sample$wl, Ag.offset,440, 350,500)$params[2,2]
-  a440 =   cdom_fit_exponential(sample$wl, Ag.offset,440, 350,500)$params[3,2]
+  S350_500 = as.numeric(cdom_fit_exponential(sample$wl, Ag.offset,440, 350,500)$params[1,2])
+  K = as.numeric(cdom_fit_exponential(sample$wl, Ag.offset,440, 350,500)$params[2,2])
+  a440 =   as.numeric(cdom_fit_exponential(sample$wl, Ag.offset,440, 350,500)$params[3,2])
   Ag.fitted = a440 * exp(S350_500*(440-sample$wl)) + K
 
   # 350 to 400 spectral range
-   S350_400 =cdom_fit_exponential(sample$wl, Ag.offset,400, 350,400)$params[1,2]
+   S350_400 =as.numeric(cdom_fit_exponential(sample$wl, Ag.offset,400, 350,400)$params[1,2])
 
 
   # 275 to 295 spectral range
-  S275_295 = cdom_fit_exponential(sample$wl, Ag.offset,300, 275,295)$params[1,2]
+  S275_295 = as.numeric(cdom_fit_exponential(sample$wl, Ag.offset,300, 275,295)$params[1,2])
 
   Sr = cdom_slope_ratio(sample$wl, Ag.offset)
 
@@ -82,6 +83,7 @@ process.Ag <- function (sample, ID, Station, Depth, pathlength, DilutionFactor=1
   return(list(ID = ID,
               Station = Station,
               Depth = Depth,
+              Date = Date,
               Lambda = sample$wl,
               OD = sample$OD,
               Ag = Ag,
