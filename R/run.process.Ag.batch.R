@@ -10,7 +10,7 @@
 #' Default is "" for no suffix. (see details below).
 #' @param data.path is the path where the csv folder is located (txt folder in the case of ULTRAPATH).
 #' So the files must be stored in data.path/csv/.  Default is "./".
-#' @param instrument is the type of instrument, i.e. "LAMBDA850" or "ULTRAPATH".
+#' @param instrument is the type of instrument, i.e. "LAMBDA850" or "ULTRAPATH" or "LAMBDA35".
 #' When ULTRAPATH is set, two files are red for each sample. inclusing the reference sample,
 #' which is an artificial sea water solution.
 #' The default is LAMBDA850.
@@ -29,6 +29,8 @@
 #' Station is the Station name. For example: "IML4", "L3_18", etc.
 #'
 #' Depth is the depth of the sample in meters.
+#'
+#' Date is the date of sampling
 #'
 #' pathlength is the pathlength of the cuvette in meters (e.g. 0.1 when using 10-cm cuvette).
 #'
@@ -56,10 +58,11 @@ run.process.Ag.batch <- function(log.file="Ag_log_TEMPLATE.dat",
 
     if (instrument == "LAMBDA850" | instrument == "LAMBDA35"){
       path.csv =  file.path(data.path,"csv")   #paste(data.path,"/csv/", sep="")
-      if (file.exists(path.csv)) {
+      path.asc =  file.path(data.path,"asc")
+      if (file.exists(path.csv) | file.exists(path.asc)) {
         print("Data path exists")
       } else {
-        print("NO csv/ subdirectory in data.path")
+        print("NO csv/ or asc/ subdirectory in data.path")
         print("Check the path:")
         print(path.csv)
         print("STOP processing")
@@ -105,18 +108,19 @@ run.process.Ag.batch <- function(log.file="Ag_log_TEMPLATE.dat",
 
 
   # Lecture des informations dans un fichier texte
-  Ag.log = read.table(file=log.file, header=T, sep="\t",
-                      colClasses = c("character", "character", "numeric","numeric","numeric","numeric"))
+  Ag.log = read.table(file=log.file, header=T, sep="\t")
+   #                   colClasses = c("character", "character", "numeric","numeric","numeric","numeric"))
+  names(Ag.log)<-str_to_upper(names(Ag.log))
 
   # Add the DilutionFactor if it is not included in the log file.
-  if (is.null(Ag.log$DilutionFactor)) {
-    Ag.log$DilutionFactor=1
+  if (is.null(Ag.log$DILUTIONFACTOR)) {
+    Ag.log$DILUTIONFACTOR=1
   }
 
   nsample = length(Ag.log$ID)
   for (i in 1:nsample) {
 
-    if (Ag.log$Ag.good[i] == 1) {
+    if (Ag.log$AG.GOOD[i] == 1) {
       basename = paste(Ag.log$ID[i],suffix, sep="")
       print(paste("Process: ", basename))
 
@@ -130,15 +134,21 @@ run.process.Ag.batch <- function(log.file="Ag_log_TEMPLATE.dat",
           names(sample) <- c("wl","OD")
       }
 
-      if (instrument == "LAMBDA35") sample = read.LAMBDA35(paste(path.csv,"/",basename, sep=""))
+      if (instrument == "LAMBDA35") {
+        ### Check whether the extension is csv or asc
+        filen <- list.files(path = path.csv, pattern = basename)
+        sample = read.LAMBDA35(paste(path.csv,"/",filen,sep=""))
+
+      }
 
       # Convert OD to absorption and compute various index.
       Ag = process.Ag(sample,
                       Ag.log$ID[i],
-                      Ag.log$Station[i],
-                      Ag.log$Depth[i],
-                      Ag.log$pathlength[i],
-                      Ag.log$DilutionFactor[i])
+                      Ag.log$STATION[i],
+                      Ag.log$DEPTH[i],
+                      Ag.log$DATE[i],
+                      Ag.log$PATHLENGTH[i],
+                      Ag.log$DILUTIONFACTOR[i])
 
       save(Ag, file=paste(path.out,"/",Ag.log$ID[i],".RData", sep=""))
 

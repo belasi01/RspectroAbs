@@ -18,7 +18,7 @@ Default is "" for no suffix. (see details below).}
 \item{data.path}{is the path where the csv folder is located (txt folder in the case of ULTRAPATH).
 So the files must be stored in data.path/csv/.  Default is "./".}
 
-\item{instrument}{is the type of instrument, i.e. "LAMBDA850" or "ULTRAPATH".
+\item{instrument}{is the type of instrument, i.e. "LAMBDA850" or "ULTRAPATH" or "LAMBDA35".
 When ULTRAPATH is set, two files are red for each sample. inclusing the reference sample,
 which is an artificial sea water solution.
 The default is LAMBDA850.}
@@ -42,6 +42,8 @@ ID is the sample ID. It is usually the base name of the CSV file.
 Station is the Station name. For example: "IML4", "L3_18", etc.
 
 Depth is the depth of the sample in meters.
+
+Date is the date of sampling
 
 pathlength is the pathlength of the cuvette in meters (e.g. 0.1 when using 10-cm cuvette).
 

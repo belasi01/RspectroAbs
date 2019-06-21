@@ -15,7 +15,12 @@
 #' @export
 
 read.LAMBDA35 <- function (filen) {
-  df = read.table(file=filen, sep=",", header=86)
+
+  ### check extension
+  if (str_detect(filen, ".csv")) df = read.table(file=filen, sep=",", skip=86)
+  if (str_detect(filen, ".asc")) df = read.table(file=filen, sep="\t", skip=86)
+
+
   names(df) <- c("wl", "OD")
   return(df)
 }
