@@ -108,14 +108,9 @@ run.process.Ag.batch <- function(log.file="Ag_log_TEMPLATE.dat",
 
 
   # Lecture des informations dans un fichier texte
-<<<<<<< HEAD
-  Ag.log = read.table(file=log.file, header=T, sep="\t",
-                      colClasses = c("character", "character", "numeric","numeric","numeric","numeric"))
-=======
   Ag.log = read.table(file=log.file, header=T, sep="\t")
    #                   colClasses = c("character", "character", "numeric","numeric","numeric","numeric"))
   names(Ag.log)<-str_to_upper(names(Ag.log))
->>>>>>> a130dd12f99890769ad97cbb9eed85456fb0bd81
 
   # Add the DilutionFactor if it is not included in the log file.
   if (is.null(Ag.log$DILUTIONFACTOR)) {

@@ -62,14 +62,7 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
 
 
   Ag.log = read.table(file=log.file, header=T,  sep="\t")
-<<<<<<< HEAD
-  ix = which(Ag.log$Ag.good == 1)
-  ID = Ag.log$ID[ix]
-  nID = length(ID)
 
-  print(paste("Number of ID is", nID))
-
-=======
   names(Ag.log)<-str_to_upper(names(Ag.log))
 
   ix = which(Ag.log$AG.GOOD == 1)
@@ -78,7 +71,6 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
 
   print(paste("Number of ID is", nID))
 
->>>>>>> a130dd12f99890769ad97cbb9eed85456fb0bd81
   load(paste(path,"/",ID[1],".RData", sep=""))
   #load(file.path(path, ID[1], ".RData"))
   waves = Ag$Lambda
@@ -116,11 +108,7 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
 
   filen = paste(data.path, "/", MISSION,".Ag.RData", sep="")
   Ag.DB = list(waves=waves, ID=ID,
-<<<<<<< HEAD
-               Station = Station, Depth=Depth,
-=======
                Station = Station, Depth=Depth, Date=Date,
->>>>>>> a130dd12f99890769ad97cbb9eed85456fb0bd81
                Ag.raw=Ag.raw, Ag.offset=Ag.offset,
                S275_295=S275_295,
                S350_400=S350_400,
@@ -140,11 +128,8 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   Ag.df <-rbind(Ag.df,c(Depth,NA))
   write.table(Ag.df, file=paste(data.path,"/",MISSION,".Ag.dat",sep=""), quote=F, row.names = F, sep=";")
 
-<<<<<<< HEAD
-  Fitted.df = data.frame(ID, Station, Depth, S275_295, S350_400, S350_500, Sr, K, a440)
-=======
   Fitted.df = data.frame(ID, Station, Depth, Date, S275_295, S350_400, S350_500, Sr, K, a440)
->>>>>>> a130dd12f99890769ad97cbb9eed85456fb0bd81
+
   write.table(Fitted.df, file=paste(data.path,"/",MISSION,".Fitted.params.dat", sep=""), quote=F, row.names = F, sep=";")
 
 
