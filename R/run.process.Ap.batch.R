@@ -127,9 +127,6 @@ run.process.Ap.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./")
       legend("topright", c("OD measured", "OD blank", "OD corrected"), col=c(1,2,3), pch=19)
 
       plot(Ap$Lambda, Ap$Ap_Stramski, xlab="Wavelength", ylab="Absorption (/m)", pch=19)
-      points(Ap$Lambda, Ap$Ap_RG, col=2, pch=19)
-      points(Ap$Lambda, Ap$Ap_4.5, col=3, pch=19)
-      legend("topright", c("Stramski", "Rottgers&Gehnke", "4.5"), col=c(1,2,3), pch=19)
 
       #### Now process Anap.
       basename =paste(Ap.log$ID[i],"_" , Ap.log$REPL[i] ,"_NAp", sep="")
@@ -154,11 +151,20 @@ run.process.Ap.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./")
         return(0)
       }
 
+<<<<<<< HEAD
       # Calcul de l'absorption
       Ap = process.Ap(sample, blank, Ap.log$FAREA[i], Ap.log$VOL[i],
                       Ap.log$ID[i], Ap.log$STATION[i], "NAp",
                       Ap.log$REPL[i], Ap.log$DEPTH[i], Ap.log$DATE[i])
 
+=======
+      # Calcul de l'absorption des  particules non-algales
+
+      Ap = process.Ap(sample, blank, Ap.log$FAREA[i], Ap.log$VOL[i],
+                      Ap.log$ID[i], Ap.log$STATION[i], "NAp",
+                      Ap.log$REPL[i], Ap.log$DEPTH[i], Ap.log$DATE[i])
+
+>>>>>>> a130dd12f99890769ad97cbb9eed85456fb0bd81
       # Sauvegarde des données sous format RData
        save(Ap, file=paste(path.out,"/",basename,".RData", sep=""))
 
@@ -168,9 +174,6 @@ run.process.Ap.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./")
       legend("topright", c("OD measured", "OD blank", "OD corrected"), col=c(1,2,3), pch=19)
 
       plot(Ap$Lambda, Ap$Ap_Stramski, xlab="Wavelength", ylab="Absorption (/m)", pch=19)
-      points(Ap$Lambda, Ap$Ap_RG, col=2, pch=19)
-      points(Ap$Lambda, Ap$Ap_4.5, col=3, pch=19)
-      legend("topright", c("Stramski", "Rottgers&Gehnke", "4.5"), col=c(1,2,3), pch=19)
       dev.off()
 
     } else {

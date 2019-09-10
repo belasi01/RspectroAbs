@@ -28,6 +28,8 @@ the log.file. This file contains 11 fields (TAB delimated) :
 
   Station    Station name
 
+  Date       Date of sampling
+
   Depth      Depth of the sample
 
   Vol        Filtered volume in mL

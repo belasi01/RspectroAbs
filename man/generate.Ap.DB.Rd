@@ -9,7 +9,7 @@ generate.Ap.DB(log.file = "Ap_log_TEMPLATE.dat", data.path = "./",
 }
 \arguments{
 \item{log.file}{is the name of the ASCII file containing the
-list of samples to process (see details below).}
+list of ID to process (see details below).}
 
 \item{data.path}{is the path where the RData folder is located.
 So the files must be stored in data.path/RData.  Default is "./".}
