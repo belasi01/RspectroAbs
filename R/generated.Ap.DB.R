@@ -54,10 +54,11 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
   }
 
 
-  Ap.log = read.table(file=log.file, header=T, sep="\t")
+  Ap.log = fread(file=log.file, colClasses = "character")
   names(Ap.log)<-str_to_upper(names(Ap.log))
+  Ap.log$ID = as.factor(Ap.log$ID)
 
-  ix = which(Ap.log$PROCESS == 1)
+  ix = which(Ap.log$PROCESS == "1")
   ID = levels(droplevels(Ap.log$ID[ix]))
   nID = length(ID)
 
@@ -78,7 +79,7 @@ generate.Ap.DB <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./",
     ix.ID = which(Ap.log$ID == ID[i])
     NAP.method = Ap.log$NAP.METHOD[ix.ID[1]]
     Station[i] = as.character(A$Ap$Station)
-    Date[i]    = A$Ap$Date
+    if (!is.null(A$Ap$Date)) Date[i]    = A$Ap$Date
     Depth[i]   = A$Ap$Depth
 
     if (Beta == "Stramski") {

@@ -38,10 +38,10 @@ run.compute.Aph.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./"
     return(0)
   }
 
+  Ap.log = fread(file=log.file, colClasses = "character")
 
-  Ap.log = read.table(file=log.file, header=T, sep="\t")
   names(Ap.log)<-str_to_upper(names(Ap.log))
-
+  Ap.log$ID = as.factor(Ap.log$ID)
   ix = which(Ap.log$PROCESS == 1)
   IDs = levels(droplevels(Ap.log$ID[ix]))
   nID = length(IDs)

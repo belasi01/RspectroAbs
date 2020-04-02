@@ -61,7 +61,7 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   }
 
 
-  Ag.log = read.table(file=log.file, header=T,  sep="\t")
+  Ag.log = fread(file=log.file)
 
   names(Ag.log)<-str_to_upper(names(Ag.log))
 

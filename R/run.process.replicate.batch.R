@@ -21,8 +21,13 @@ run.process.replicate.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.pat
     return(0)
   }
 
-  Ap.log = read.table(file=log.file, header=T, sep="\t")
+  Ap.log = fread(file=log.file, colClasses = "character")
   names(Ap.log)<-str_to_upper(names(Ap.log))
+  Ap.log$ID = as.factor(Ap.log$ID)
+  Ap.log$PROCESS = as.numeric(Ap.log$PROCESS)
+  Ap.log$AP.GOOD=  as.numeric(Ap.log$AP.GOOD)
+  Ap.log$NAP.GOOD= as.numeric(Ap.log$NAP.GOOD)
+
   ix = which(Ap.log$PROCESS == 1)
   IDs = levels(droplevels(Ap.log$ID[ix]))
   nID = length(IDs)
@@ -32,17 +37,7 @@ run.process.replicate.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.pat
 
     print(paste("ID",i," out of", nID))
     ix = which(Ap.log$ID == IDs[i])
-<<<<<<< HEAD
 
-    Replicates = Ap.log$REPL[ix]
-
-    if (any(Ap.log$AP.GOOD[ix] == 1)) {
-      Ap = process.replicate(path,path.png,  IDs[i], Ap.log$STATION[ix[1]],
-                              "Ap", Replicates[Ap.log$AP.GOOD[ix] == 1],
-                              Ap.log$DEPTH[ix[1]])
-
-
-=======
 
     Replicates = Ap.log$REPL[ix]
 
@@ -52,8 +47,6 @@ run.process.replicate.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.pat
                               Ap.log$DEPTH[ix[1]], Ap.log$DATE[ix[1]])
 
 
-
->>>>>>> a130dd12f99890769ad97cbb9eed85456fb0bd81
       save(Ap, file=paste(path.out,IDs[i],"_" , "Ap",".RData", sep=""))
 
     } else {
@@ -61,18 +54,12 @@ run.process.replicate.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.pat
     }
 
     if (any(Ap.log$NAP.GOOD[ix] == 1)) {
-<<<<<<< HEAD
 
-      Ap = process.replicate(path,path.png,  IDs[i], Ap.log$STATION[ix[1]],
-                             "NAp", Replicates[Ap.log$NAP.GOOD[ix] == 1],
-                             Ap.log$DEPTH[ix[1]])
-=======
 
       Ap = process.replicate(path,path.png,  IDs[i], Ap.log$STATION[ix[1]],
                              "NAp", Replicates[Ap.log$NAP.GOOD[ix] == 1],
                              Ap.log$DEPTH[ix[1]], Ap.log$DATE[ix[1]])
 
->>>>>>> a130dd12f99890769ad97cbb9eed85456fb0bd81
 
       save(Ap, file=paste(path.out,IDs[i],"_" , "NAp",".RData", sep=""))
     } else {

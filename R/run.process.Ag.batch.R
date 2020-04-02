@@ -108,7 +108,7 @@ run.process.Ag.batch <- function(log.file="Ag_log_TEMPLATE.dat",
 
 
   # Lecture des informations dans un fichier texte
-  Ag.log = read.table(file=log.file, header=T, sep="\t")
+  Ag.log = fread(file=log.file)
    #                   colClasses = c("character", "character", "numeric","numeric","numeric","numeric"))
   names(Ag.log)<-str_to_upper(names(Ag.log))
 

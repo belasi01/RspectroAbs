@@ -81,9 +81,12 @@ run.process.Ap.batch <- function(log.file="Ap_log_TEMPLATE.dat", data.path="./")
     return(0)
   }
 
-
-  Ap.log = read.table(file=log.file, header=T, sep="\t")
+  Ap.log = fread(file=log.file, colClasses = "charater")
   names(Ap.log)<-str_to_upper(names(Ap.log))
+  Ap.log$DEPTH = as.numeric(Ap.log$DEPTH)
+  Ap.log$VOL   = as.numeric(Ap.log$VOL)
+  Ap.log$FAREA = as.numeric(Ap.log$FAREA)
+  Ap.log$PROCESS=as.numeric(Ap.log$PROCESS)
 
   nsample = length(Ap.log$ID)
   for (i in 1:nsample) {

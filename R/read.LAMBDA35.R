@@ -17,9 +17,9 @@
 read.LAMBDA35 <- function (filen) {
 
   ### check extension
-  if (str_detect(filen, ".csv")) df = read.table(file=filen, sep=",", skip=86)
-  if (str_detect(filen, ".asc")) df = read.table(file=filen, sep="\t", skip=86)
-
+  #if (str_detect(filen, ".csv")) df = read.table(file=filen, sep=",", skip=86)
+  #if (str_detect(filen, ".asc")) df = read.table(file=filen, sep="\t", skip=86)
+  df = fread(filen)
 
   names(df) <- c("wl", "OD")
   return(df)

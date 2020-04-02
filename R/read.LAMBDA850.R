@@ -15,7 +15,10 @@
 #' @export
 
 read.LAMBDA850 <- function (filen) {
-  df = read.table(file=filen, sep=",", header=1)
+
+  # Add a condition to detect the separator (i.e. "," or ";")
+  #df = read.table(file=filen, sep=",", header=1)
+  df = fread(file=filen)
   names(df) <- c("wl", "OD")
   return(df)
 }
