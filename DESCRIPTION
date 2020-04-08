@@ -1,8 +1,8 @@
 Package: RspectroAbs
 Type: Package
 Title: Processing absorbance spectra from spectrophotometer
-Version: 0.3-5
-Date: 2020-04-02
+Version: 0.3-6
+Date: 2020-04-08
 Author: Simon Belanger <simon_belanger@uqar.ca>
 Maintainer: Simon Belanger <simon_belanger@uqar.ca>
 Description: Convert optical depth to absorption coefficient for dissolved and

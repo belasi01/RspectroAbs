@@ -108,9 +108,13 @@ run.process.Ag.batch <- function(log.file="Ag_log_TEMPLATE.dat",
 
 
   # Lecture des informations dans un fichier texte
-  Ag.log = fread(file=log.file)
+  Ag.log = fread(file=log.file, colClasses = "character")
    #                   colClasses = c("character", "character", "numeric","numeric","numeric","numeric"))
   names(Ag.log)<-str_to_upper(names(Ag.log))
+  Ag.log$DILUTIONFACTOR = as.numeric(Ag.log$DILUTIONFACTOR)
+  Ag.log$PATHLENGTH = as.numeric(Ag.log$PATHLENGTH)
+  Ag.log$AG.GOOD = as.numeric(Ag.log$AG.GOOD)
+
 
   # Add the DilutionFactor if it is not included in the log file.
   if (is.null(Ag.log$DILUTIONFACTOR)) {
@@ -137,7 +141,14 @@ run.process.Ag.batch <- function(log.file="Ag_log_TEMPLATE.dat",
       if (instrument == "LAMBDA35") {
         ### Check whether the extension is csv or asc
         filen <- list.files(path = path.csv, pattern = basename)
-        sample = read.LAMBDA35(paste(path.csv,"/",filen,sep=""))
+        if (file.exists(paste(path.csv,"/",filen[1],sep=""))) {
+          sample = read.LAMBDA35(paste(path.csv,"/",filen[1],sep=""))
+        } else {
+          print(paste("File", filen, "does not exist..."))
+          print("Check log file and file names")
+          print("Stop processing!")
+          return(0)
+        }
 
       }
 

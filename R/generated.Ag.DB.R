@@ -61,10 +61,10 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   }
 
 
-  Ag.log = fread(file=log.file)
+  Ag.log = fread(file=log.file, colClasses = "character")
 
   names(Ag.log)<-str_to_upper(names(Ag.log))
-
+  Ag.log$AG.GOOD = as.numeric(Ag.log$AG.GOOD)
   ix = which(Ag.log$AG.GOOD == 1)
   ID = Ag.log$ID[ix]
   nID = length(ID)
@@ -72,7 +72,8 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   print(paste("Number of ID is", nID))
 
   load(paste(path,"/",ID[1],".RData", sep=""))
-  #load(file.path(path, ID[1], ".RData"))
+
+
   waves = Ag$Lambda
   ix350 = which(waves == 350)
   Ag.raw   = matrix(NA, ncol = nID, nrow=length(waves))
@@ -90,9 +91,16 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   for (i in 1:nID) {
     load(paste(path,"/", ID[i],".RData", sep=""))
 
-    #load(file.path(path, ID[i], ".RData"))
-    Ag.raw[,i] = Ag$Ag
-    Ag.offset[,i] = Ag$Ag.offset
+    # check if wavelenghts are the same
+    if (length(waves) != length(Ag$Lambda)) {
+      print(paste(path,"/", ID[i],".RData does not have the same wavelenght range", sep=""))
+      Ag.raw[,i]     = spline(Ag$Lambda, Ag$Ag, xout=waves)$y
+      Ag.offset[,i]  = spline(Ag$Lambda, Ag$Ag.offset, xout=waves)$y
+    } else {
+      Ag.raw[,i] = Ag$Ag
+      Ag.offset[,i] = Ag$Ag.offset
+    }
+
     S275_295[i] = Ag$S275_295
     S350_400[i] = Ag$S350_400
     S350_500[i] = Ag$S350_500
@@ -135,7 +143,7 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
 
   # plot all Ag
 
-  png(paste(data.path,"/",MISSION,".Ag.png",sep=""), res=300, height = 6, width = 8, units = "in")
+  png(paste(data.path,"/",MISSION,".Ag.Offset.png",sep=""), res=300, height = 6, width = 8, units = "in")
   plot(waves, Ag.offset[,1], xlim=c(300,700), ylim=c(0,max(Ag.offset[ix350,],na.rm=T)), type="l",
        ylab=expression(paste(a[g],(lambda),(m^-1))), xlab=expression(lambda), col=8,
        main=paste(MISSION, ": CDOM absorption"))
@@ -146,6 +154,20 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   lines(waves, (mean.Ag-sd.Ag), lwd=2, lty=2)
   lines(waves, (mean.Ag+sd.Ag), lwd=2, lty=2)
   dev.off()
+
+  #### Same plot with no offset
+  png(paste(data.path,"/",MISSION,".Ag.png",sep=""), res=300, height = 6, width = 8, units = "in")
+  plot(waves, Ag.raw[,1], xlim=c(300,700), ylim=c(0,max(Ag.raw[ix350,],na.rm=T)), type="l",
+       ylab=expression(paste(a[g],(lambda),(m^-1))), xlab=expression(lambda), col=8,
+       main=paste(MISSION, ": CDOM absorption"))
+  for (i in 2:nID) lines(waves, Ag.raw[,i],col=8)
+  mean.Ag = apply(Ag.raw, 1, mean, na.rm=T)
+  lines(waves, mean.Ag, lwd=2)
+  sd.Ag = apply(Ag.raw, 1, sd, na.rm=T)
+  lines(waves, (mean.Ag-sd.Ag), lwd=2, lty=2)
+  lines(waves, (mean.Ag+sd.Ag), lwd=2, lty=2)
+  dev.off()
+
 
   return(Ag.DB)
 
