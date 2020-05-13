@@ -109,7 +109,8 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
     K[i] = Ag$K
     Station[i] = as.character(Ag$Station)
     Depth[i] = Ag$Depth
-    Date[i]  = Ag$Date
+    if(exists('Ag$Date')){Date[i]  = Ag$Date}
+    else {Date[i] = "NA"}
   }
 
   # Save output in RData format
