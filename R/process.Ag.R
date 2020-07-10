@@ -69,16 +69,29 @@ process.Ag <- function (sample, ID, Station, Depth, Date,  pathlength, DilutionF
   a440 =   as.numeric(cdom_fit_exponential(sample$wl, Ag.offset,440, 350,500)$params[3,2])
   Ag.fitted = a440 * exp(S350_500*(440-sample$wl)) + K
 
+  # 350 to 500 nm spectral range no offset before fitting
+  S350_500.m = as.numeric(cdom_fit_exponential(sample$wl, Ag,440, 350,500)$params[1,2])
+  K.m = as.numeric(cdom_fit_exponential(sample$wl, Ag,440, 350,500)$params[2,2])
+  a440.m =   as.numeric(cdom_fit_exponential(sample$wl, Ag,440, 350,500)$params[3,2])
+  Ag.fitted.m = a440.m * exp(S350_500.m*(440-sample$wl)) + K.m
+
   # 350 to 400 spectral range
    S350_400 =as.numeric(cdom_fit_exponential(sample$wl, Ag.offset,400, 350,400)$params[1,2])
+   S350_400.m =as.numeric(cdom_fit_exponential(sample$wl, Ag,400, 350,400)$params[1,2])
 
 
   # 275 to 295 spectral range
   S275_295 = as.numeric(cdom_fit_exponential(sample$wl, Ag.offset,300, 275,295)$params[1,2])
+  S275_295.m = as.numeric(cdom_fit_exponential(sample$wl, Ag,300, 275,295)$params[1,2])
+
 
   Sr = cdom_slope_ratio(sample$wl, Ag.offset)
 
   Scurv = cdom_spectral_curve(sample$wl, Ag.offset)
+
+  Sr.m = cdom_slope_ratio(sample$wl, Ag)
+
+  Scurv.m = cdom_spectral_curve(sample$wl, Ag)
 
   return(list(ID = ID,
               Station = Station,
@@ -90,13 +103,21 @@ process.Ag <- function (sample, ID, Station, Depth, Date,  pathlength, DilutionF
               Ag.offset = Ag.offset,
               red.offset = red.offset,
               Ag.fitted=Ag.fitted,
-              S275_295=S275_295,
+              S275_295=S275_295, # fitted on measured Ag - OFFSET
               S350_400=S350_400,
               S350_500=S350_500,
               Sr = Sr,
               K = K,
               a440 = a440,
               Scurv = Scurv,
+              Ag.fitted.m=Ag.fitted.m,
+              S275_295.m=S275_295.m, # fitted on measured Ag
+              S350_400.m=S350_400.m,
+              S350_500.m=S350_500.m,
+              Sr.m = Sr.m,
+              K.m = K.m,
+              a440.m = a440.m,
+              Scurv.m = Scurv.m,
               DilutionFactor = DilutionFactor
               ))
 

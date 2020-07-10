@@ -41,19 +41,22 @@ plot.Ag <-function(path.png, Ag, PNG=TRUE){
     plot(Ag$Lambda, Ag$Ag, xlab="Wavelength", ylab="Absorption (/m)", type="l", main=Ag$ID,lwd=3)
     lines(Ag$Lambda, Ag$Ag.offset, lwd=3, col=2)
     lines(Ag$Lambda, Ag$Ag.fitted, lwd=3, col=3)
+    lines(Ag$Lambda, Ag$Ag.fitted.m, lwd=3, col=4)
     lines(Ag$Lambda, rep(0.0115, length(Ag$Lambda)), lwd=2, col="grey")
-    legend("topright", c("Ag", "Ag.offset", "Ag.fitted"), col=c(1,2,3), lwd=c(3,3,3))
+    legend("topright", c("Ag", "Ag.offset", "Ag.fitted", "Ag.fitted.m"), col=c(1,2,3,4), lwd=c(3,3,3,3))
 
     plot(Ag$Lambda, Ag$Ag, xlab="Wavelength", ylab="Absorption (/m)", type="l", log="y",
          lwd=3, ylim=c(0.001,max(Ag$Ag, na.rm=T)))
     lines(Ag$Lambda, Ag$Ag.offset, lwd=3, col=2)
     lines(Ag$Lambda, Ag$Ag.fitted, lwd=3, col=3)
+    lines(Ag$Lambda, Ag$Ag.fitted.m, lwd=3, col=4)
     lines(Ag$Lambda, rep(0.0115, length(Ag$Lambda)), lwd=2, col="grey")
 
     plot(Ag$Lambda, Ag$Ag, xlab="Wavelength", ylab="Absorption (/m)", type="l",
          lwd=3, xlim=c(350,700), ylim=c(0,Ag$Ag[ix350]))
     lines(Ag$Lambda, Ag$Ag.offset, lwd=3, col=2)
     lines(Ag$Lambda, Ag$Ag.fitted, lwd=3, col=3)
+    lines(Ag$Lambda, Ag$Ag.fitted.m, lwd=3, col=4)
     lines(Ag$Lambda, rep(0.0115, length(Ag$Lambda)), lwd=2, col="grey")
 
     if (Ag$red.offset > 0.011) {
@@ -69,6 +72,7 @@ plot.Ag <-function(path.png, Ag, PNG=TRUE){
          type="l", log="y", lwd=3, xlim=c(350,700), ylim=c(0.004,maxAg))
     lines(Ag$Lambda, Ag$Ag.offset, lwd=3, col=2)
     lines(Ag$Lambda, Ag$Ag.fitted, lwd=3, col=3)
+    lines(Ag$Lambda, Ag$Ag.fitted.m, lwd=3, col=4)
     lines(Ag$Lambda, rep(0.0115, length(Ag$Lambda)), lwd=2, col="grey")
 
     dev.off()
@@ -77,19 +81,22 @@ plot.Ag <-function(path.png, Ag, PNG=TRUE){
     plot(Ag$Lambda, Ag$Ag, xlab="Wavelength", ylab="Absorption (/m)", type="l", main=Ag$ID,lwd=3)
     lines(Ag$Lambda, Ag$Ag.offset, lwd=3, col=2)
     lines(Ag$Lambda, Ag$Ag.fitted, lwd=3, col=3)
+    lines(Ag$Lambda, Ag$Ag.fitted.m, lwd=3, col=4)
     lines(Ag$Lambda, rep(0.0115, length(Ag$Lambda)), lwd=2, col="grey")
-    legend("topright", c("Ag", "Ag.offset", "Ag.fitted"), col=c(1,2,3), lwd=c(3,3,3))
+    legend("topright", c("Ag", "Ag.offset", "Ag.fitted", "Ag.fitted.m"), col=c(1,2,3,4), lwd=c(3,3,3,3))
 
     plot(Ag$Lambda, Ag$Ag, xlab="Wavelength", ylab="Absorption (/m)", type="l", log="y",
          lwd=3, ylim=c(0.001,max(Ag$Ag, na.rm=T)))
     lines(Ag$Lambda, Ag$Ag.offset, lwd=3, col=2)
     lines(Ag$Lambda, Ag$Ag.fitted, lwd=3, col=3)
+    lines(Ag$Lambda, Ag$Ag.fitted.m, lwd=3, col=4)
     lines(Ag$Lambda, rep(0.0115, length(Ag$Lambda)), lwd=2, col="grey")
 
     plot(Ag$Lambda, Ag$Ag, xlab="Wavelength", ylab="Absorption (/m)", type="l",
          lwd=3, xlim=c(350,700), ylim=c(0,Ag$Ag[ix350]))
     lines(Ag$Lambda, Ag$Ag.offset, lwd=3, col=2)
     lines(Ag$Lambda, Ag$Ag.fitted, lwd=3, col=3)
+    lines(Ag$Lambda, Ag$Ag.fitted.m, lwd=3, col=4)
     lines(Ag$Lambda, rep(0.0115, length(Ag$Lambda)), lwd=2, col="grey")
     if (Ag$red.offset > 0.011) {
       text(550, (Ag$Ag[ix350]*0.8), paste("Red Offset= ", signif(Ag$red.offset,3)), col=2)
@@ -104,6 +111,7 @@ plot.Ag <-function(path.png, Ag, PNG=TRUE){
          type="l", log="y", lwd=3, xlim=c(350,700), ylim=c(0.004,maxAg))
     lines(Ag$Lambda, Ag$Ag.offset, lwd=3, col=2)
     lines(Ag$Lambda, Ag$Ag.fitted, lwd=3, col=3)
+    lines(Ag$Lambda, Ag$Ag.fitted.m, lwd=3, col=4)
     lines(Ag$Lambda, rep(0.0115, length(Ag$Lambda)), lwd=2, col="grey")
   }
 }

@@ -12,6 +12,7 @@
 #' the output files. The default is "YYY".
 #' (i.e. MISSION.Ag.RData; MISSION.Ag.dat;
 #' MISSION.Fitted.params.dat; MISSION.Ag.png)
+#' @param MEASURED if a logical parameter indicating if the fitted parameter is computed using the measured Ag without the red offset. Defautl is FALSE
 #'
 #' @return the function returns a list containing the following fields:
 #'   waves, ID, Station, Depth,Ag.raw, Ag.offset,S275_295,
@@ -30,7 +31,8 @@
 #'
 generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
                            data.path="./",
-                           MISSION="YYY") {
+                           MISSION="YYY",
+                           MEASURED=FALSE) {
 
   # Lecture des informations dans un fichier texte
   #path = paste(data.path, "/RData/", sep="")
@@ -101,12 +103,22 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
       Ag.offset[,i] = Ag$Ag.offset
     }
 
-    S275_295[i] = Ag$S275_295
-    S350_400[i] = Ag$S350_400
-    S350_500[i] = Ag$S350_500
-    Sr[i] = Ag$Sr
-    a440[i] = Ag$a440
-    K[i] = Ag$K
+    if (MEASURED) {
+      S275_295[i] = Ag$S275_295.m
+      S350_400[i] = Ag$S350_400.m
+      S350_500[i] = Ag$S350_500.m
+      Sr[i] = Ag$Sr.m
+      a440[i] = Ag$a440.m
+      K[i] = Ag$K.m
+    } else{
+      S275_295[i] = Ag$S275_295
+      S350_400[i] = Ag$S350_400
+      S350_500[i] = Ag$S350_500
+      Sr[i] = Ag$Sr
+      a440[i] = Ag$a440
+      K[i] = Ag$K
+    }
+
     Station[i] = as.character(Ag$Station)
     Depth[i] = Ag$Depth
     Date[i]  = Ag$Date
@@ -114,7 +126,8 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
 
   # Save output in RData format
 
-  filen = paste(data.path, "/", MISSION,".Ag.RData", sep="")
+  if (MEASURED) filen = paste(data.path, "/", MISSION,".Ag.MEASURED.RData", sep="") else filen = paste(data.path, "/", MISSION,".Ag.RedOffset.RData", sep="")
+
   Ag.DB = list(waves=waves, ID=ID,
                Station = Station, Depth=Depth, Date=Date,
                Ag.raw=Ag.raw, Ag.offset=Ag.offset,
@@ -128,7 +141,7 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
 
   # Save output in ASCII format
 
-  Ag.df = as.data.frame(Ag.offset)
+  if (MEASURED) Ag.df = as.data.frame(Ag.raw) else Ag.df = as.data.frame(Ag.offset)
   names(Ag.df) <- ID
   Ag.df$waves = waves
   Ag.df <-rbind(Ag.df, c(Station,NA))
@@ -138,12 +151,14 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
 
   Fitted.df = data.frame(ID, Station, Depth, Date, S275_295, S350_400, S350_500, Sr, K, a440)
 
-  write.table(Fitted.df, file=paste(data.path,"/",MISSION,".Fitted.params.dat", sep=""), quote=F, row.names = F, sep=";")
+  if (MEASURED) filen = paste(data.path,"/",MISSION,".Fitted.params.MEASURED.dat", sep="") else filen = paste(data.path,"/",MISSION,".Fitted.params.RedOffset.dat", sep="")
+
+  write.table(Fitted.df, file=filen, quote=F, row.names = F, sep=";")
 
 
   # plot all Ag
 
-  png(paste(data.path,"/",MISSION,".Ag.Offset.png",sep=""), res=300, height = 6, width = 8, units = "in")
+  png(paste(data.path,"/",MISSION,".Ag.RedOffset.png",sep=""), res=300, height = 6, width = 8, units = "in")
   plot(waves, Ag.offset[,1], xlim=c(300,700), ylim=c(0,max(Ag.offset[ix350,],na.rm=T)), type="l",
        ylab=expression(paste(a[g],(lambda),(m^-1))), xlab=expression(lambda), col=8,
        main=paste(MISSION, ": CDOM absorption"))
@@ -156,7 +171,7 @@ generate.Ag.DB <- function(log.file="Ag_log_TEMPLATE.dat",
   dev.off()
 
   #### Same plot with no offset
-  png(paste(data.path,"/",MISSION,".Ag.png",sep=""), res=300, height = 6, width = 8, units = "in")
+  png(paste(data.path,"/",MISSION,".Ag.MEASURED.png",sep=""), res=300, height = 6, width = 8, units = "in")
   plot(waves, Ag.raw[,1], xlim=c(300,700), ylim=c(0,max(Ag.raw[ix350,],na.rm=T)), type="l",
        ylab=expression(paste(a[g],(lambda),(m^-1))), xlab=expression(lambda), col=8,
        main=paste(MISSION, ": CDOM absorption"))
