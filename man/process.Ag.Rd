@@ -5,8 +5,7 @@
 \title{Process raw optical depth to CDOM spectra and analyse the spectral
  shape using \pkg{cdom} package functionalities.}
 \usage{
-process.Ag(sample, ID, Station, Depth, Date, pathlength,
-  DilutionFactor = 1)
+process.Ag(sample, ID, Station, Depth, Date, pathlength, DilutionFactor = 1)
 }
 \arguments{
 \item{sample}{is a data frame return by \code{\link{read.LAMBDA850}} or

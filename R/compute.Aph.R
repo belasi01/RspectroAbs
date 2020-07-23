@@ -29,7 +29,10 @@ compute.Aph <- function(waves, Ap, Anap){
   # pigments on the filter after methanol extraction
 
   # find index some lambda
-  i310 = which(waves == 310)
+  if (min(waves) > 310) imin=which(waves == min(waves)) else {
+    imin = which(waves == 310)
+  }
+
   i380 = which(waves == 380)
   i400 = which(waves == 400)
   i443 = which(waves == 443)
@@ -54,7 +57,7 @@ compute.Aph <- function(waves, Ap, Anap){
     Anap750 = Anap[i750]
 
     # Check for consistency in NAP spectra
-    if (Anap[i380] > 1.1*Anap[i310]) {
+    if (Anap[i380] > 1.1*Anap[imin]) {
       print("NAP spectrum not realistic")
       print("No fit for this spectra")
       print("Fitted spectum for NAP will be set to the measured spectrum")
@@ -64,8 +67,8 @@ compute.Aph <- function(waves, Ap, Anap){
     } else {
 
       # Subset the aNAP file to avoid residual pigments.
-      df = as.data.frame(cbind(waves[c(i750:i710,i620:i500,i400:i310)],
-                               Anap[c(i750:i710,i620:i500,i400:i310)]))
+      df = as.data.frame(cbind(waves[c(i750:i710,i620:i500,i400:imin)],
+                               Anap[c(i750:i710,i620:i500,i400:imin)]))
       names(df) <- c("waves", "Anap")
 
       model <- nls(Anap ~ A*exp(-B*(waves-400)) + C, data=df,

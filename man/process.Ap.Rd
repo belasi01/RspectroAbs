@@ -4,8 +4,18 @@
 \alias{process.Ap}
 \title{Process raw optical depth to Ap spectra using filter-pad technique}
 \usage{
-process.Ap(sample, blank, Farea = NA, Vol.ml = NA, SpecType = NA, ID,
-  Station, Repl, Depth, Date)
+process.Ap(
+  sample,
+  blank,
+  Farea = NA,
+  Vol.ml = NA,
+  SpecType = NA,
+  ID,
+  Station,
+  Repl,
+  Depth,
+  Date
+)
 }
 \arguments{
 \item{sample}{is a data frame return by \code{\link{read.LAMBDA850}} for the measured optical depth

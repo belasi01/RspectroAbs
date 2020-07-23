@@ -4,8 +4,12 @@
 \alias{run.process.Ag.batch}
 \title{Process CDOM spectra in batch mode}
 \usage{
-run.process.Ag.batch(log.file = "Ag_log_TEMPLATE.dat", suffix = "",
-  data.path = "./", instrument = "LAMBDA850")
+run.process.Ag.batch(
+  log.file = "Ag_log_TEMPLATE.dat",
+  suffix = "",
+  data.path = "./",
+  instrument = "LAMBDA850"
+)
 }
 \arguments{
 \item{log.file}{is the name of the ASCII file containing the

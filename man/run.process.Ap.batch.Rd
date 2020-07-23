@@ -4,8 +4,7 @@
 \alias{run.process.Ap.batch}
 \title{Process Particulate absorption spectra in batch mode}
 \usage{
-run.process.Ap.batch(log.file = "Ap_log_TEMPLATE.dat",
-  data.path = "./")
+run.process.Ap.batch(log.file = "Ap_log_TEMPLATE.dat", data.path = "./")
 }
 \arguments{
 \item{log.file}{is the name of the ASCII file containing the

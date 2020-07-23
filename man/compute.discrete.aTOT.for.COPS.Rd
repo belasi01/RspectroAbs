@@ -4,8 +4,11 @@
 \alias{compute.discrete.aTOT.for.COPS}
 \title{Compute the total absorption for COPS processing of LuZ profile}
 \usage{
-compute.discrete.aTOT.for.COPS(cops.path = "./", ag.RData = "ag.RData",
-  ap.RData = "ap.RData")
+compute.discrete.aTOT.for.COPS(
+  cops.path = "./",
+  ag.RData = "ag.RData",
+  ap.RData = "ap.RData"
+)
 }
 \arguments{
 \item{cops.path}{is the full path of the COPS data where the absorption.cops.dat file can be found}

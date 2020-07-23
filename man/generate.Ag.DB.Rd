@@ -4,8 +4,12 @@
 \alias{generate.Ag.DB}
 \title{Assemble the CDOM absorption data into a single data base}
 \usage{
-generate.Ag.DB(log.file = "Ag_log_TEMPLATE.dat", data.path = "./",
-  MISSION = "YYY")
+generate.Ag.DB(
+  log.file = "Ag_log_TEMPLATE.dat",
+  data.path = "./",
+  MISSION = "YYY",
+  MEASURED = FALSE
+)
 }
 \arguments{
 \item{log.file}{is the name of the ASCII file containing the
@@ -18,6 +22,8 @@ So the files must be stored in data.path/RData.  Default is "./".}
 the output files. The default is "YYY".
 (i.e. MISSION.Ag.RData; MISSION.Ag.dat;
 MISSION.Fitted.params.dat; MISSION.Ag.png)}
+
+\item{MEASURED}{if a logical parameter indicating if the fitted parameter is computed using the measured Ag without the red offset. Defautl is FALSE}
 }
 \value{
 the function returns a list containing the following fields:

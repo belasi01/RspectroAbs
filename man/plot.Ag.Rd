@@ -4,7 +4,7 @@
 \alias{plot.Ag}
 \title{Plot CDOM spectra}
 \usage{
-plot.Ag(path.png, Ag, PNG = TRUE)
+\method{plot}{Ag}(path.png, Ag, PNG = TRUE)
 }
 \arguments{
 \item{path.png}{is the path where the png file will be saved}

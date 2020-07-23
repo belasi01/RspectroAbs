@@ -4,8 +4,11 @@
 \alias{run.compute.Aph.batch}
 \title{Compute phytoplankton absorption spectrum in batch mode}
 \usage{
-run.compute.Aph.batch(log.file = "Ap_log_TEMPLATE.dat",
-  data.path = "./", PLOT = FALSE)
+run.compute.Aph.batch(
+  log.file = "Ap_log_TEMPLATE.dat",
+  data.path = "./",
+  PLOT = FALSE
+)
 }
 \arguments{
 \item{log.file}{is the name of the ASCII file containing the list of

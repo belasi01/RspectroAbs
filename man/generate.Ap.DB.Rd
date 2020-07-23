@@ -4,8 +4,12 @@
 \alias{generate.Ap.DB}
 \title{Assemble the Ap absorption data into a single data base}
 \usage{
-generate.Ap.DB(log.file = "Ap_log_TEMPLATE.dat", data.path = "./",
-  MISSION = "YYY", Beta = "Stramski")
+generate.Ap.DB(
+  log.file = "Ap_log_TEMPLATE.dat",
+  data.path = "./",
+  MISSION = "YYY",
+  Beta = "Stramski"
+)
 }
 \arguments{
 \item{log.file}{is the name of the ASCII file containing the
