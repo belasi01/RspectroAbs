@@ -46,7 +46,7 @@ compute.discrete.aTOT.for.COPS <- function (cops.path="./",
   a.g.cops = spline(Ag$Lambda, Ag$Ag.offset,  xout=lambda, method="natural")$y
 
   # get Pure water absorption at COPS wavelengths
-  a.w.cops = spectral.aw(lambda)
+  a.w.cops = Riops::spectral.aw(lambda)
 
   a.tot.cops = a.p.cops + a.g.cops + a.w.cops
 
@@ -57,7 +57,7 @@ plot(lambda, a.tot.cops,
      ylim=c(0, max(a.tot.cops)))
 
 lines(A$Ap$Lambda,A$Ap$Ap.Stramski.mean, col=2, lwd=3)
-lines(300:800, spectral.aw(300:800), col=4, lwd=4)
+lines(300:800, Riops::spectral.aw(300:800), col=4, lwd=4)
 lines(Ag$Lambda,Ag$Ag.offset, col=3, lwd=3)
 dev.off()
 
