@@ -21,6 +21,7 @@
 #' @return It returns a vector of total absorption.
 #'
 #' @author Simon Belanger
+#' @import Riops
 #' @export
 
 compute.discrete.aTOT.for.COPS <- function (cops.path="./",
